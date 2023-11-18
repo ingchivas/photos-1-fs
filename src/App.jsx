@@ -7,7 +7,7 @@ function App() {
   const [reload, setReload] = useState(false);
 
   const reloadPhotos = () => {
-    setReload(prev => !prev); // Toggle to trigger useEffect
+    setReload(prev => !prev);
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function App() {
           ))} */}
 
           {photos.map(photo => (
-            <PhotoCard key={photo.id} photo={photo} /> // Use PhotoCard component here
+            <PhotoCard key={photo.id} photo={photo} />
           ))}
 
         </div>
