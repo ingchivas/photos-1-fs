@@ -4,13 +4,18 @@ import PhotoCard from './components/PhotoCard';
 
 function App() {
   const [photos, setPhotos] = useState([]);
+  const [reload, setReload] = useState(false);
+
+  const reloadPhotos = () => {
+    setReload(prev => !prev); // Toggle to trigger useEffect
+  };
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/photos')
+    fetch('http://localhost:5000/api/v1/images')
       .then(response => response.json())
       .then(data => setPhotos(data.slice(0, 25)))
       .catch(error => console.error('Error fetching data: ', error));
-  }, []);
+  }, [reload]);
 
   return (
     <>
@@ -20,7 +25,7 @@ function App() {
         Sumar 1
       </button> */}
       {/* <Navbar /> */}
-      <Navbar user={{ name: 'José Kuri', email: 'jk@up.mx', photo: 'https://media.discordapp.net/attachments/750831694839545886/1172622670433624186/image.png' }} />
+      <Navbar user={{ name: 'José Kuri', email: 'jk@up.mx', photo: 'https://media.discordapp.net/attachments/750831694839545886/1172622670433624186/image.png' }} onReload={reloadPhotos} />
       <div className='flex justify-center'>
         <div className='grid grid-cols-3 gap-10 mt-5'>
           {/* {photos.map(photo => (

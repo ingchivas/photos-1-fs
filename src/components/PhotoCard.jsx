@@ -1,11 +1,14 @@
-// PhotoCard.js
 import React from 'react';
 import PropTypes from 'prop-types';
 
 const PhotoCard = ({ photo }) => {
     return (
         <div className='max-w-sm rounded overflow-hidden shadow-lg'>
-            <img src={photo.url} alt={photo.title} className='w-full' />
+            <img 
+                src={photo.url} 
+                alt={photo.title} 
+                className='w-full max-h-72 object-cover'
+            />
             <div className='px-6 py-4'>
                 <div className='font-bold text-xl mb-2'>{photo.title}</div>
             </div>

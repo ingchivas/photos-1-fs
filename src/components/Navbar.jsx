@@ -1,7 +1,30 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import CreatePostModal from './CreatePostModal';
 
+const Navbar = ({ user, onReload }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-const Navbar = ({ user }) => {
+    const handleSubmit = async (postData) => {
+        try {
+            const response = await fetch('http://localhost:5000/api/v1/images', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(postData)
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            
+            setIsModalOpen(false);
+            onReload();
+        } catch (error) {
+            console.error('Failed to submit post:', error);
+        }
+    };
+
     return (
         <nav className="bg-gray-800 text-white p-4">
             <div className="container mx-auto flex justify-between items-center">
@@ -12,7 +35,10 @@ const Navbar = ({ user }) => {
                 <div className="flex items-center space-x-4">
                     <a href="/" className="hover:text-gray-300">Home</a>
                     <a href="/profile" className="hover:text-gray-300">Mi pefil</a>
-                    <a href="/post" className="hover:text-gray-300 text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">Crear Post</a>
+                    <button onClick={() => setIsModalOpen(true)} className="hover:text-gray-300 text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">
+                        Crear Post
+                    </button>
+
                     {user && (
                         <div className="flex items-center space-x-2">
                             <img src={user.photo} alt={user.name} className="h-8 w-8 rounded-full" />
@@ -21,6 +47,7 @@ const Navbar = ({ user }) => {
                     )}
                 </div>
             </div>
+            {isModalOpen && <CreatePostModal onClose={() => setIsModalOpen(false)} onSubmit={handleSubmit} />}
         </nav>
     );
 };
@@ -30,8 +57,9 @@ Navbar.propTypes = {
         name: PropTypes.string,
         email: PropTypes.string,
         photo: PropTypes.string
-    })
-};
+    }),
 
+    onReload: PropTypes.func.isRequired
+};
 
 export default Navbar;
