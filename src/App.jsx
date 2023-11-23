@@ -11,7 +11,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/v1/images')
+    fetch('https://img.api.mbgrp.com.mx/api/v1/images')
       .then(response => response.json())
       .then(data => setPhotos(data.slice(0, 25)))
       .catch(error => console.error('Error fetching data: ', error));

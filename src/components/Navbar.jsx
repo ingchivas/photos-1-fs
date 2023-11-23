@@ -7,7 +7,7 @@ const Navbar = ({ user, onReload }) => {
 
     const handleSubmit = async (postData) => {
         try {
-            const response = await fetch('http://localhost:5000/api/v1/images', {
+            const response = await fetch('https://img.api.mbgrp.com.mx/api/v1/images', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
